@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/4nmt/TeamManageApp-api/controllers"
-	"github.com/4nmt/TeamManageApp-api/db"
+	"github.com/4nmt/team-manage-api/controllers"
+	"github.com/4nmt/team-manage-api/db"
 
 	"github.com/gin-gonic/gin"
 )

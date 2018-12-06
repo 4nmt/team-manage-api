@@ -4,8 +4,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/4nmt/TeamManageApp-api/db"
-	"github.com/4nmt/TeamManageApp-api/forms"
+	"github.com/4nmt/team-manage-api/db"
+	"github.com/4nmt/team-manage-api/forms"
 )
 
 //User ...

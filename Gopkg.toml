@@ -48,3 +48,11 @@
 [prune]
   go-tests = true
   unused-packages = true
+
+[metadata.heroku]
+  root-package = "team-manage-api"
+  go-version = "1.10.4"
+  build = ["."]
+[[constraint]]
+  name = "github.com/golang/dep"
+  version = "0.5.0"

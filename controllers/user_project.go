@@ -3,8 +3,8 @@ package controllers
 import (
 	"strconv"
 
-	"github.com/4nmt/TeamManageApp-api/forms"
-	"github.com/4nmt/TeamManageApp-api/models"
+	"github.com/4nmt/team-manage-api/forms"
+	"github.com/4nmt/team-manage-api/models"
 
 	"github.com/gin-gonic/gin"
 )

@@ -18,11 +18,11 @@ The fastest way to deploy a restful api's with [Gin Framework](https://gin-gonic
 ### Installation
 
 ```
-$ go get github.com/4nmt/TeamManageApp-api
+$ go get github.com/4nmt/team-manage-api
 ```
 
 ```
-$ cd $GOPATH/src/github.com/4nmt/TeamManageApp-api
+$ cd $GOPATH/src/github.com/4nmt/team-manage-api
 ```
 
 ```
