@@ -16,11 +16,16 @@ type DB struct {
 
 const (
 	//DbUser ...
-	DbUser = "postgres"
+	// DbUser = "postgres"
+	DbUser = "oypwfmnxlfdtrw"
+
 	//DbPassword ...
-	DbPassword = "example"
+	// DbPassword = "example"
+	DbPassword = "707a89591c093c910f1873f6a3258dd466b646573537a4a0b14bfc19035dc452"
+
 	//DbName ...
-	DbName = "team_manage_app"
+	// DbName = "team_manage_app"
+	DbName = "d7a8rbk65f03hv"
 )
 
 var db *gorp.DbMap
