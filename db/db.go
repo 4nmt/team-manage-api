@@ -26,6 +26,13 @@ const (
 	//DbName ...
 	// DbName = "team_manage_app"
 	DbName = "d7a8rbk65f03hv"
+
+	//DbHost ...
+	DbHost = "ec2-174-129-41-12.compute-1.amazonaws.com"
+
+	//DbPort ...
+	// DbName = "team_manage_app"
+	DbPort = "5432"
 )
 
 var db *gorp.DbMap
@@ -33,8 +40,17 @@ var db *gorp.DbMap
 //Init ...
 func Init() {
 
-	dbinfo := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable",
-		DbUser, DbPassword, DbName)
+	// dbinfo := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable",
+	// 	DbUser, DbPassword, DbName)
+
+		dbinfo := fmt.Sprintf("user=%s dbname=%s sslmode=%s password=%s host=%s port=%s",
+	DbUser,
+	DbName,
+	"require",
+	DbPassword,
+	DbHost,
+	DbPort,
+	
 
 	var err error
 	db, err = ConnectDB(dbinfo)
