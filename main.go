@@ -82,7 +82,10 @@ func main() {
 	// 	c.HTML(404, "404.html", gin.H{})
 	// })
 
-	port := os.Getenv("PORT") || "9000"
+	port := os.Getenv("PORT")
+	if port != "" {
+		port = "9000"
+	}
 
 	r.Run(port)
 }
