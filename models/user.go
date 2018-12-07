@@ -20,20 +20,8 @@ type User struct {
 //UserModel ...
 type UserModel struct{}
 
-// //Signin ...
-// func (m UserModel) Signin(form forms.UserForm) (user User, err error) {
-
-// 	err = db.GetDB().SelectOne(&user, "SELECT id, email, password, name, updated_at, created_at FROM public.user WHERE email=LOWER($1) LIMIT 1", form.Email)
-
-// 	if err != nil {
-// 		return user, err
-// 	}
-
-// 	return user, nil
-// }
-
-//AddUser ...
-func (m UserModel) AddUser(form forms.UserForm) (user User, err error) {
+//Create ...
+func (m UserModel) Create(form forms.UserForm) (user User, err error) {
 	getDb := db.GetDB()
 
 	checkUser, err := getDb.SelectInt("SELECT count(id) FROM public.users WHERE email=LOWER($1) LIMIT 1", form.Email)
@@ -56,8 +44,26 @@ func (m UserModel) AddUser(form forms.UserForm) (user User, err error) {
 	return user, errors.New("Not registered")
 }
 
+//Delete ...
+func (m UserModel) Delete(userID int) error {
+	_, err := m.One(userID)
+	if err != nil {
+		return err
+	}
+
+	_, err = db.GetDB().Exec("DELETE FROM public.users WHERE id=$1", userID)
+
+	return err
+}
+
 //One ...
-func (m UserModel) One(userID int64) (user User, err error) {
-	err = db.GetDB().SelectOne(&user, "SELECT id, email, name FROM public.user WHERE id=$1", userID)
+func (m UserModel) One(userID int) (user User, err error) {
+	err = db.GetDB().SelectOne(&user, "SELECT id, email, name FROM public.users WHERE id=$1", userID)
 	return user, err
+}
+
+//All ...
+func (m UserModel) All() (users []User, err error) {
+	_, err = db.GetDB().Select(&users, "SELECT id, email, name FROM public.users")
+	return users, err
 }

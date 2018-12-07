@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/go-gorp/gorp"
 	_ "github.com/lib/pq" //import postgres
@@ -16,41 +17,24 @@ type DB struct {
 
 const (
 	//DbUser ...
-	// DbUser = "postgres"
-	DbUser = "oypwfmnxlfdtrw"
+	DbUser = "postgres"
 
 	//DbPassword ...
-	// DbPassword = "example"
-	DbPassword = "707a89591c093c910f1873f6a3258dd466b646573537a4a0b14bfc19035dc452"
+	DbPassword = "example"
 
 	//DbName ...
-	// DbName = "team_manage_app"
-	DbName = "d7a8rbk65f03hv"
-
-	//DbHost ...
-	DbHost = "ec2-174-129-41-12.compute-1.amazonaws.com"
-
-	//DbPort ...
-	// DbName = "team_manage_app"
-	DbPort = "5432"
+	DbName = "team_manage_app"
 )
 
 var db *gorp.DbMap
 
 //Init ...
 func Init() {
-
-	// dbinfo := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable",
-	// 	DbUser, DbPassword, DbName)
-
-	dbinfo := fmt.Sprintf("user=%s dbname=%s sslmode=%s password=%s host=%s port=%s",
-		DbUser,
-		DbName,
-		"require",
-		DbPassword,
-		DbHost,
-		DbPort)
-
+	dbinfo := os.Getenv("DATABASE_URL")
+	if dbinfo == "" {
+		dbinfo = fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable",
+			DbUser, DbPassword, DbName)
+	}
 	var err error
 	db, err = ConnectDB(dbinfo)
 	if err != nil {
@@ -69,7 +53,6 @@ func ConnectDB(dataSourceName string) (*gorp.DbMap, error) {
 		return nil, err
 	}
 	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.PostgresDialect{}}
-	//dbmap.TraceOn("[gorp]", log.New(os.Stdout, "golang-gin:", log.Lmicroseconds)) //Trace database requests
 	return dbmap, nil
 }
 

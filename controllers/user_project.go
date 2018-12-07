@@ -14,7 +14,7 @@ type UserProjectController struct{}
 
 var userProjectModel = new(models.UserProjectModel)
 
-//Create ...
+//Assign ...
 func (ctrl UserProjectController) Assign(c *gin.Context) {
 	var userProjectForm forms.UserProjectForm
 
@@ -35,7 +35,7 @@ func (ctrl UserProjectController) Assign(c *gin.Context) {
 	c.JSON(200, gin.H{"message": "Project created", "id": userProjectID})
 }
 
-//Create ...
+//Remove ...
 func (ctrl UserProjectController) Remove(c *gin.Context) {
 	userProjectID := c.Param("id")
 

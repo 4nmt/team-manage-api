@@ -13,7 +13,6 @@ import (
 //CORSMiddleware ...
 func CORSMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// c.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost")
 		c.Writer.Header().Set("Access-Control-Max-Age", "86400")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding, x-access-token")
@@ -32,55 +31,34 @@ func CORSMiddleware() gin.HandlerFunc {
 func main() {
 	r := gin.Default()
 
-	// store, _ := sessions.NewRedisStore(10, "tcp", "localhost:6379", "", []byte("secret"))
-	// r.Use(sessions.Sessions("gin-boilerplate-session", store))
-
 	r.Use(CORSMiddleware())
 
 	db.Init()
 
-	v1 := r.Group("/")
+	v1 := r.Group("/v1")
 	{
 		/*** START USER ***/
 		users := new(controllers.UserController)
 
-		v1.POST("/user", users.AddUser)
-		// v1.POST("/user/signup", user.Signup)
-		// v1.GET("/user/signout", user.Signout)
+		v1.GET("/user", users.All)
+		v1.GET("/user/:id", users.One)
+		v1.POST("/user", users.Create)
+		// v1.DELETE("/user/:id", users.Delete)
 
-		/*** START Article ***/
-		project := new(controllers.ProjectController)
+		/*** START PROJECT ***/
+		projects := new(controllers.ProjectController)
 
-		v1.POST("/project", project.Create)
-		// v1.GET("/articles", article.All)
-		v1.GET("/project/:id", project.One)
-		// v1.PUT("/article/:id", article.Update)
-		// v1.DELETE("/article/:id", article.Delete)
+		v1.GET("/project", projects.All)
+		v1.GET("/project/:id", projects.One)
+		v1.POST("/project", projects.Create)
+		// v1.DELETE("/project/:id", projects.Delete)
 
-		/*** START Article ***/
+		/*** START USER PROJECT ***/
 		userProject := new(controllers.UserProjectController)
 
 		v1.POST("/user_project", userProject.Assign)
-		// v1.GET("/articles", article.All)
-		// v1.GET("/article/:id", article.One)
-		// v1.PUT("/article/:id", article.Update)
 		v1.DELETE("/user_project/:id", userProject.Remove)
 	}
-
-	// r.LoadHTMLGlob("./public/html/*")
-
-	// r.Static("/public", "./public")
-
-	// r.GET("/", func(c *gin.Context) {
-	// 	c.HTML(http.StatusOK, "index.html", gin.H{
-	// 		"ginBoilerplateVersion": "v0.03",
-	// 		"goVersion":             runtime.Version(),
-	// 	})
-	// })
-
-	// r.NoRoute(func(c *gin.Context) {
-	// 	c.HTML(404, "404.html", gin.H{})
-	// })
 
 	port := os.Getenv("PORT")
 	if port == "" {

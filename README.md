@@ -9,11 +9,11 @@ The fastest way to deploy a restful api's with [Gin Framework](https://gin-gonic
 
 ## Configured with
 
-* [go-gorp](https://github.com/go-gorp/gorp): Go Relational Persistence
-* [RedisStore](https://github.com/gin-gonic/contrib/tree/master/sessions): Gin middleware for session management with multi-backend support (currently cookie, Redis).
-* Built-in **CORS Middleware**
-* Feature **PostgreSQL 9.6** JSON queries
-* Unit test
+- [go-gorp](https://github.com/go-gorp/gorp): Go Relational Persistence
+- [RedisStore](https://github.com/gin-gonic/contrib/tree/master/sessions): Gin middleware for session management with multi-backend support (currently cookie, Redis).
+- Built-in **CORS Middleware**
+- Feature **PostgreSQL 9.6** JSON queries
+- Unit test
 
 ### Installation
 
@@ -30,6 +30,7 @@ $ go get -t -v ./...
 ```
 
 > Sometimes you need to get this package manually
+
 ```
 $ go get github.com/bmizerany/assert
 ```
@@ -37,8 +38,9 @@ $ go get github.com/bmizerany/assert
 You will find the **database.sql** in `db/database.sql`
 
 And you can import the postgres database using this command:
+
 ```
-$ psql -U postgres -h localhost < ./db/database.sql
+$ psql -U postgres -h -host < ./db/database.sql
 ```
 
 ## Running Your Application
@@ -63,8 +65,8 @@ $ ./gin-boilerplate
 $ go test -v ./tests/*
 ```
 
-
 ## Import Postman Collection (API's)
+
 You can import from this [link](https://www.getpostman.com/collections/ac0680f90961bafd5de7). If you don't have **Postman**, check this link [https://www.getpostman.com](https://www.getpostman.com/)
 
 ## Contribution
@@ -76,6 +78,7 @@ If you have any question or need help, drop a message at [https://gitter.im/Mass
 ---
 
 ## License
+
 (The MIT License)
 
 Permission is hereby granted, free of charge, to any person obtaining

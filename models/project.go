@@ -21,17 +21,27 @@ type Project struct {
 type ProjectModel struct{}
 
 //Create ...
-func (m ProjectModel) Create(form forms.ProjectForm) (articleID int64, err error) {
+func (m ProjectModel) Create(form forms.ProjectForm) (projectID int64, err error) {
 	getDb := db.GetDB()
 
-	var projectID int64
 	err = getDb.QueryRow("INSERT INTO public.projects( name,description, updated_at, created_at) VALUES($1, $2, $3, $4) RETURNING id", form.Name, form.Description, time.Now().Unix(), time.Now().Unix()).Scan(&projectID)
-
 	if err != nil {
 		return -1, err
 	}
 
 	return projectID, err
+}
+
+//Delete ...
+func (m ProjectModel) Delete(projectID int) error {
+	_, err := m.One(projectID)
+	if err != nil {
+		return err
+	}
+
+	_, err = db.GetDB().Exec("DELETE FROM public.users WHERE id=$1", projectID)
+
+	return err
 }
 
 //One ...
@@ -51,8 +61,8 @@ func (m ProjectModel) One(projectID int) (project Project, err error) {
 	return project, err
 }
 
-// //All ...
-// func (m ArticleModel) All(userID int64) (articles []Article, err error) {
-// 	_, err = db.GetDB().Select(&articles, "SELECT a.id, a.title, a.content, a.updated_at, a.created_at, json_build_object('id', u.id, 'name', u.name, 'email', u.email) AS user FROM public.article a LEFT JOIN public.user u ON a.user_id = u.id WHERE a.user_id=$1 ORDER BY a.id DESC", userID)
-// 	return articles, err
-// }
+//All ...
+func (m ProjectModel) All() (projects []Project, err error) {
+	_, err = db.GetDB().Select(&projects, "SELECT id, name, description, updated_at, created_at FROM public.projects")
+	return projects, err
+}
