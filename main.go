@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/4nmt/team-manage-api/controllers"
 	"github.com/4nmt/team-manage-api/db"
@@ -81,5 +82,7 @@ func main() {
 	// 	c.HTML(404, "404.html", gin.H{})
 	// })
 
-	r.Run(":9000")
+	port := os.Getenv("PORT") || "9000"
+
+	r.Run(port)
 }
