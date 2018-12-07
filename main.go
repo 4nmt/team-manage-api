@@ -13,6 +13,7 @@ import (
 //CORSMiddleware ...
 func CORSMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 		c.Writer.Header().Set("Access-Control-Max-Age", "86400")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding, x-access-token")
@@ -43,7 +44,7 @@ func main() {
 		v1.GET("/user", users.All)
 		v1.GET("/user/:id", users.One)
 		v1.POST("/user", users.Create)
-		// v1.DELETE("/user/:id", users.Delete)
+		v1.DELETE("/user/:id", users.Delete)
 
 		/*** START PROJECT ***/
 		projects := new(controllers.ProjectController)
@@ -51,7 +52,7 @@ func main() {
 		v1.GET("/project", projects.All)
 		v1.GET("/project/:id", projects.One)
 		v1.POST("/project", projects.Create)
-		// v1.DELETE("/project/:id", projects.Delete)
+		v1.DELETE("/project/:id", projects.Delete)
 
 		/*** START USER PROJECT ***/
 		userProject := new(controllers.UserProjectController)

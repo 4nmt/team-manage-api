@@ -20,6 +20,7 @@ type UserProject struct {
 //UserProjectModel ...
 type UserProjectModel struct{}
 
+// Assign ...
 func (m UserProjectModel) Assign(form forms.UserProjectForm) (userProjectID int, err error) {
 	getDb := db.GetDB()
 
@@ -55,15 +56,19 @@ func (m UserProjectModel) One(userProjectID int) (userProject UserProject, err e
 	return userProject, err
 }
 
-func (m UserProjectModel) Remove(userProjectID int) (err error) {
+//Remove...
+func (m UserProjectModel) Remove(userID int) (err error) {
 	getDb := db.GetDB()
-	_, err = m.One(userProjectID)
-
+	checkUser, err := getDb.SelectInt("SELECT count(id) FROM public.users WHERE id=$1 LIMIT 1", userID)
 	if err != nil {
-		return errors.New("user_project not found")
+		return err
 	}
 
-	_, err = getDb.Exec("DELETE FROM public.user_project WHERE id=$1", userProjectID)
+	if checkUser <= 0 {
+		return errors.New("user doesn't exists")
+	}
+
+	_, err = getDb.Exec("DELETE FROM public.user_project WHERE user_id=$1", userID)
 
 	return err
 }

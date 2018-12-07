@@ -51,6 +51,9 @@ func (m UserModel) Delete(userID int) error {
 		return err
 	}
 
+	if _, err = db.GetDB().Exec("DELETE FROM public.user_project WHERE user_id=$1", userID); err != nil {
+		return err
+	}
 	_, err = db.GetDB().Exec("DELETE FROM public.users WHERE id=$1", userID)
 
 	return err
