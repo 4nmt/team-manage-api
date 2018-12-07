@@ -43,14 +43,13 @@ func Init() {
 	// dbinfo := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable",
 	// 	DbUser, DbPassword, DbName)
 
-		dbinfo := fmt.Sprintf("user=%s dbname=%s sslmode=%s password=%s host=%s port=%s",
-	DbUser,
-	DbName,
-	"require",
-	DbPassword,
-	DbHost,
-	DbPort,
-	
+	dbinfo := fmt.Sprintf("user=%s dbname=%s sslmode=%s password=%s host=%s port=%s",
+		DbUser,
+		DbName,
+		"require",
+		DbPassword,
+		DbHost,
+		DbPort)
 
 	var err error
 	db, err = ConnectDB(dbinfo)
