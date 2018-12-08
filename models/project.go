@@ -14,7 +14,7 @@ type Project struct {
 	Description string           `db:"description" json:"description"`
 	UpdatedAt   int64            `db:"updated_at" json:"updated_at"`
 	CreatedAt   int64            `db:"created_at" json:"created_at"`
-	Users       []forms.UserForm `json:"users"`
+	Users       []User `json:"users"`
 }
 
 //ProjectModel ...
@@ -55,8 +55,8 @@ func (m ProjectModel) One(projectID int) (project Project, err error) {
 		return project, err
 	}
 
-	users := []forms.UserForm{}
-	_, err = db.GetDB().Select(&users, "SELECT distinct u.name,u.email FROM (users u JOIN user_project up ON u.id = up.user_id) JOIN projects p ON up.project_id = p.id WHERE p.id=$1", projectID)
+	users := []User{}
+	_, err = db.GetDB().Select(&users, "SELECT distinct u.id, u.name,u.email FROM (users u JOIN user_project up ON u.id = up.user_id) JOIN projects p ON up.project_id = p.id WHERE p.id=$1", projectID)
 	if err != nil {
 		return project, err
 	}
