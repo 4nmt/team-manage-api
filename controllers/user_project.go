@@ -37,24 +37,29 @@ func (ctrl UserProjectController) Assign(c *gin.Context) {
 
 //Remove ...
 func (ctrl UserProjectController) Remove(c *gin.Context) {
-	userProjectID := c.Param("id")
+	userIDTmp, projectIDTmp := c.Param("user_id"), c.Param("project_id")
 
 	var (
-		id  int
-		err error
+		userID, projectID int
+		err               error
 	)
 
-	if id, err = strconv.Atoi(userProjectID); err != nil {
-		c.JSON(406, gin.H{"message": "Count not parse string to int", "error": err.Error()})
+	if userID, err = strconv.Atoi(userIDTmp); err != nil {
+		c.JSON(406, gin.H{"message": "Count not parse userID string to int", "error": err.Error()})
 		c.Abort()
 	}
 
-	err = userProjectModel.Remove(id)
+	if projectID, err = strconv.Atoi(projectIDTmp); err != nil {
+		c.JSON(406, gin.H{"message": "Count not parse projectID string to int", "error": err.Error()})
+		c.Abort()
+	}
+
+	err = userProjectModel.Remove(userID, projectID)
 	if err != nil {
 		c.JSON(406, gin.H{"message": "could not be removed this user_project", "error": err.Error()})
 		c.Abort()
 		return
 	}
 
-	c.JSON(200, gin.H{"message": "This has been removed", "id": userProjectID})
+	c.JSON(200, gin.H{"message": "This has been removed"})
 }

@@ -9,11 +9,11 @@ import (
 
 //Project ...
 type Project struct {
-	ID          int64            `db:"id, primarykey, autoincrement" json:"id"`
-	Name        string           `db:"name" json:"name"`
-	Description string           `db:"description" json:"description"`
-	UpdatedAt   int64            `db:"updated_at" json:"updated_at"`
-	CreatedAt   int64            `db:"created_at" json:"created_at"`
+	ID          int64  `db:"id, primarykey, autoincrement" json:"id"`
+	Name        string `db:"name" json:"name"`
+	Description string `db:"description" json:"description"`
+	UpdatedAt   int64  `db:"updated_at" json:"updated_at"`
+	CreatedAt   int64  `db:"created_at" json:"created_at"`
 	Users       []User `json:"users"`
 }
 
@@ -43,7 +43,7 @@ func (m ProjectModel) Delete(projectID int) error {
 		return err
 	}
 
-	_, err = db.GetDB().Exec("DELETE FROM public.users WHERE id=$1", projectID)
+	_, err = db.GetDB().Exec("DELETE FROM public.projects WHERE id=$1", projectID)
 
 	return err
 }

@@ -58,7 +58,7 @@ func main() {
 		userProject := new(controllers.UserProjectController)
 
 		v1.POST("/user_project", userProject.Assign)
-		v1.DELETE("/user_project/:id", userProject.Remove)
+		v1.DELETE("/user_project/:user_id/:project_id", userProject.Remove)
 	}
 
 	port := os.Getenv("PORT")

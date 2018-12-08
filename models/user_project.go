@@ -57,7 +57,7 @@ func (m UserProjectModel) One(userProjectID int) (userProject UserProject, err e
 }
 
 //Remove...
-func (m UserProjectModel) Remove(userID int) (err error) {
+func (m UserProjectModel) Remove(userID int, projectID int) (err error) {
 	getDb := db.GetDB()
 	checkUser, err := getDb.SelectInt("SELECT count(id) FROM public.users WHERE id=$1 LIMIT 1", userID)
 	if err != nil {
@@ -68,7 +68,15 @@ func (m UserProjectModel) Remove(userID int) (err error) {
 		return errors.New("user doesn't exists")
 	}
 
-	_, err = getDb.Exec("DELETE FROM public.user_project WHERE user_id=$1", userID)
+	checkProject, err := getDb.SelectInt("SELECT count(id) FROM public.projects WHERE id=$1 LIMIT 1", projectID)
+	if err != nil {
+		return err
+	}
+	if checkProject <= 0 {
+		return errors.New("project doesn't exists")
+	}
+
+	_, err = getDb.Exec("DELETE FROM public.user_project WHERE user_id=$1 AND project_id=$2", userID, projectID)
 
 	return err
 }
